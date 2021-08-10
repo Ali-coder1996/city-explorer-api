@@ -5,7 +5,7 @@ const cors = require('cors');
 require('dotenv').config();
 app.use(cors());
 const PORT = process.env.PORT;
-
+// first api weather data
 app.get('/weather', (req, res) => {
   let lat = req.query.lat;
   let lon = req.query.lon;
@@ -25,7 +25,6 @@ app.get('/weather', (req, res) => {
     res.status(500).send('Could not find the city you searched for');
   }
 });
-
 
 class ForeCast {
   constructor(item) {
