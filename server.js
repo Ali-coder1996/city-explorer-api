@@ -12,7 +12,7 @@ app.get('/weather', (req, res) => {
   let cityName = req.query.cityName;
   let city ={};
   city = weather.find(item => {
-    return (cityName.toLowerCase() === item.city_name.toLowerCase() && Number(lat) === item.lat && Number(lon) === item.lon);
+    return (cityName.toLowerCase() === item.city_name.toLowerCase() && Number(lat) === Number(item.lat) && Number(lon) === Number(item.lon));
   });
   if (city) {
     let cityData=[];
