@@ -10,29 +10,30 @@ app.get('/weather', (req, res) => {
   let lat = req.query.lat;
   let lon = req.query.lon;
   let cityName = req.query.cityName;
-
-  let dataHandel=()=>{
-    let city = weather.find(item => {
-      return (cityName.toLowerCase() === item.city_name.toLowerCase() && Number(lat) === Number(item.lat) && Number(lon) === Number(item.lon)) ;
+  let city ={};
+  city = weather.find(item => {
+    return (cityName.toLowerCase() === item.city_name.toLowerCase() && Number(lat) === item.lat && Number(lon) === item.lon);
+  });
+  if (city) {
+    let cityData=[];
+    console.log(city);
+    city.data.map(item => {
+      cityData.push(new ForeCast(item));
     });
-    return city.data.map(item => {
-      console.log(city);
-      return new ForeCast(item);
-    });
-  };
+    res.json(cityData);
+  }else {
+    res.status(500).send('Could not find the city you searched for');
+  }
+});
 
-  res.json(dataHandel());
-}
-);
 
 class ForeCast {
-  constructor(weatherData) {
-    this.data = weatherData.valid_date;
-    this.description = weatherData.weather.description;
+  constructor(item) {
+    this.valid_date = item.valid_date;
+    this.description = item.weather.description;
   }
 }
 
 app.listen(PORT, () => {
   console.log(`this is my port numbers ${PORT}`);
 });
-
