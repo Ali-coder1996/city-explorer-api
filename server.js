@@ -37,17 +37,18 @@ app.get('/weather', (req, res) => {
 
 app.get('/movies', async (req, res) => {
   let city_name = req.query.city_name
-  const url = `${weather_API_URL}?api_key=${movies_API_key}&query=${city_name}`;
+  const url = `${weather_API_URL}?api_key=${movies_API_key}&city_name=${city_name}`;
 
   await axios.get(url).then(res => {
       console.log(res.data.results)
+      let araay =[]
         let moviesList =res.data.results.map((movie) => {
-          console.log('aaaaaaaaaa')
-        return (new Data(movie))
+         araay.push(new Data(movie))
       });
-      console.log('wwwwwwwwwww')
-      res.json(moviesList)
+      console.log(araay)
+      res.status(200).send(araay)
     }).catch((error) => { res.status(500).send(error) })
+
     
 });
 
