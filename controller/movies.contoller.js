@@ -8,13 +8,11 @@ const movies=(req, res) => {
     let query=req.query.query
     const url = `${weather_API_URL}?api_key=${movies_API_key}&query=${query}`;
     axios.get(url).then(item => {
-      console.log(item.data)
       let moviesList = item.data.results
       let araay = []
       moviesList.map((movie) => {
         araay.push(new Data(movie))
       });
-      console.log(araay)
       res.json(araay)
     }).catch((error) => { res.send(error.message) })
 }
