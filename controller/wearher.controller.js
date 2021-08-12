@@ -1,25 +1,20 @@
 'use strict';
 const ForeCast = require('../model/weather.model')
-const weathers = require('../data/weather.json');
+const { default: axios } = require('axios');
 
 const weather =(req, res) => {
-    let lat = Number(req.query.lat);
-    let lon = Number(req.query.lon);
-    // let cityName = req.query.cityName;
-    let city = {};
-    city = weathers.find(item => {
-      return (lat === Number(item.lat) || lon === Number(item.lon));
-    });
-    if (city) {
-      let cityData = [];
-      console.log(city);
-      city.data.map(item => {
-        cityData.push(new ForeCast(item));
-      });
-      res.json(cityData);
-    } else {
-      res.status(500).send('Could not find the city you searched for');
-    }
+    let city = req.query.city;
+    let weatherUrl =`https://api.weatherbit.io/v2.0/forecast/daily?city=${city}&key=${process.env.WEATHER_API_KEY}`
+    axios.get(weatherUrl).then(item =>{
+        console.log(item.data.data)
+        let weatherData=item.data.data
+        let arrayOfData=[]
+         weatherData.map(item =>{
+            arrayOfData.push(new ForeCast(item))
+        })
+        res.status(200).json(arrayOfData)
+    }).catch(error =>  {res.status(500).send(error.message)} )
+
   }
 
 module.exports=weather

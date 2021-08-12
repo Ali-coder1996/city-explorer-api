@@ -7,7 +7,7 @@ class Data {
         this.overview = movie.overview,
         this.average_votes = movie.vote_average,
         this.total_votes = movie.vote_count,
-        this.image_url = `https://image.tmdb.org/t/p/w200/${movie.poster_path}`,
+        this.image_url = movie.poster_path ? `https://image.tmdb.org/t/p/w200${movie.poster_path}` : 'https://image.tmdb.org/t/p/w200/csE4ldFMH415Irm22kJCXd04wNL.jpg',
         this.popularity = movie.popularity;
     }
   }
