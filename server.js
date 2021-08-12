@@ -8,9 +8,8 @@ const PORT = process.env.PORT;
 const movies = require('./controller/movies.contoller')
 const weather =require('./controller/wearher.controller')
 // first api weather data
+
 app.get('/weather', weather );
-
-
 
 app.get('/movies',movies );
 
